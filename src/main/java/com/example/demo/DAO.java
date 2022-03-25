@@ -370,7 +370,7 @@ public class DAO {
     public void kmean_cluster() throws IOException {
        // List<WuzzufData>  lisTAlldata =getWuzzufList();\
 
-        Table t = Table.read().csv("I:/14-Java UML/Project/newWuzzuf.csv");
+  /*      Table t = Table.read().csv("I:/14-Java UML/Project/newWuzzuf.csv");
         NumberColumn[] inputColumns = new NumberColumn[2];
         inputColumns[0]= (NumberColumn) t.nCol(8);
 //        NumericColumn<?> cols;//
@@ -378,7 +378,7 @@ public class DAO {
 //                t.nCol(9);
        double[][] input = DoubleArrays.to2dArray(inputColumns);
        double  distortion=5;
-       KMeans k=new KMeans(distortion,input,10);
+       KMeans k=new KMeans(distortion,input,10);*/
     //Object clusters = PartitionClustering.run(20, () -> KMeans.fit(x, 6));
     //ScatterPlot.plot(x, clusters.y, '.', Palette.COLORS).window();
     }

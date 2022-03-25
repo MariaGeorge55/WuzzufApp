@@ -29,6 +29,11 @@ public class Controller {
         return new DAO().view_importantSkills();
     }
 
+    @GetMapping("/min_year_exp")
+    public String min_year_exp() {
+        return new DAO().min_year_exp();
+    }
+
 
     @GetMapping("/kmean_cluster")
     public void kmean_cluster() throws IOException {
