@@ -5,18 +5,17 @@ import org.apache.commons.csv.CSVFormat;
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 import smile.clustering.KMeans;
+import smile.clustering.PartitionClustering;
 import smile.data.DataFrame;
 import smile.data.Tuple;
 import smile.data.measure.NominalScale;
 import smile.data.vector.IntVector;
 import smile.io.Read;
-import smile.io.Write;
-import tech.tablesaw.api.NumberColumn;
-import tech.tablesaw.api.NumericColumn;
+import smile.plot.swing.ScatterPlot;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.util.DoubleArrays;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
@@ -24,8 +23,6 @@ import java.util.stream.Collectors;
 
 
 import java.util.ArrayList;
-
-import static java.nio.file.Paths.*;
 
 public class DAO {
     protected DataFrame df;
@@ -361,26 +358,43 @@ public class DAO {
         return a_Names;
     }
 
-    public  void newDataframe() throws IOException {
+    public double[][] newDataframe() throws IOException {
         DataFrame  df2 = df.merge(IntVector.of("Factorized Title", encodeCategory(df, "Title")));
         df2 = df2.merge(IntVector.of("Factorized Company", encodeCategory(df, "Company")));
-        Write.csv(df2, get("I:/14-Java UML/Project/newWuzzuf.csv"));
+        // Write.csv(df2, get("I:/14-Java UML/Project/newWuzzuf.csv"));
+        df=df2;
+        DataFrame kmean = df2.select("Factorized Company", "Factorized Title");
+        double[][] KMEAN= kmean.toArray();
+        return KMEAN;
     }
 
     public void kmean_cluster() throws IOException {
-       // List<WuzzufData>  lisTAlldata =getWuzzufList();\
+        double [][] KMEANS=newDataframe();
+        KMeans clusters = PartitionClustering.run(5, () -> KMeans.fit(KMEANS,3));
+        try
+        {
+            ScatterPlot.of(KMEANS, clusters.y, '.').canvas().setAxisLabels("Companies", "Jobs").window();
+        }
+        catch (InvocationTargetException | InterruptedException e)
+        {e.printStackTrace();}
 
-  /*      Table t = Table.read().csv("I:/14-Java UML/Project/newWuzzuf.csv");
-        NumberColumn[] inputColumns = new NumberColumn[2];
-        inputColumns[0]= (NumberColumn) t.nCol(8);
-//        NumericColumn<?> cols;//
-//        cols.add(t.nCol(8));
-//                t.nCol(9);
-       double[][] input = DoubleArrays.to2dArray(inputColumns);
-       double  distortion=5;
-       KMeans k=new KMeans(distortion,input,10);*/
-    //Object clusters = PartitionClustering.run(20, () -> KMeans.fit(x, 6));
-    //ScatterPlot.plot(x, clusters.y, '.', Palette.COLORS).window();
+
+        // Create Chart
+        XYChart chart = new XYChartBuilder().width(800).height(600).build();
+
+        // Customize Chart
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
+        chart.getStyler().setChartTitleVisible(false);
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideSW);
+        chart.getStyler().setMarkerSize(2);
+
+        // Series
+        double[] comp = df.column("Factorized Company").toDoubleArray();
+        double[] tit = df.column("Factorized Title").toDoubleArray();
+
+        chart.addSeries("Gaussian Blob", comp, tit);
+        new SwingWrapper(chart).displayChart ();
+
     }
 
 
