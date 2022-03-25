@@ -364,6 +364,7 @@ public class DAO {
         // Write.csv(df2, get("I:/14-Java UML/Project/newWuzzuf.csv"));
         df=df2;
         DataFrame kmean = df2.select("Factorized Company", "Factorized Title");
+
         double[][] KMEAN= kmean.toArray();
         return KMEAN;
     }
@@ -373,28 +374,14 @@ public class DAO {
         KMeans clusters = PartitionClustering.run(5, () -> KMeans.fit(KMEANS,3));
         try
         {
+            double[] comp = {2050,1845};
+            System.out.println(  clusters.predict(comp));
             ScatterPlot.of(KMEANS, clusters.y, '.').canvas().setAxisLabels("Companies", "Jobs").window();
+
         }
         catch (InvocationTargetException | InterruptedException e)
         {e.printStackTrace();}
-
-
-        // Create Chart
-        XYChart chart = new XYChartBuilder().width(800).height(600).build();
-
-        // Customize Chart
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
-        chart.getStyler().setChartTitleVisible(false);
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideSW);
-        chart.getStyler().setMarkerSize(2);
-
-        // Series
-        double[] comp = df.column("Factorized Company").toDoubleArray();
-        double[] tit = df.column("Factorized Title").toDoubleArray();
-
-        chart.addSeries("Gaussian Blob", comp, tit);
-        new SwingWrapper(chart).displayChart ();
-
+        
     }
 
 

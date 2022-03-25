@@ -35,10 +35,10 @@ public class Controller {
     }
 
 
-    @GetMapping("/kmean_cluster")
+   /* @GetMapping("/kmean_cluster")
     public void kmean_cluster() throws IOException {
          new DAO().kmean_cluster();
-    }
+    }*/
 
     @GetMapping("/mostDcompany")
     public String mostDcompany() throws IOException {
@@ -55,13 +55,6 @@ public class Controller {
     @GetMapping("/Summary")
     public String Summary() throws IOException {
         return new DAO().Summary();
-    }
-
-    @RequestMapping(value = "/summaryPic", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
-    public void getSummaryPic(HttpServletResponse response) throws IOException {
-        ClassPathResource imgFile = new ClassPathResource("summary.jpg");
-        response.setContentType(IMAGE_JPEG_VALUE);
-        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
 
     @RequestMapping(value = "/companyChart", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
@@ -92,12 +85,11 @@ public class Controller {
         response.setContentType(IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
-    @RequestMapping(value = "/viewDataPic", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
-    public void getData(HttpServletResponse response) throws IOException {
 
-//        services.PieChartPath();
-        ClassPathResource imgFile = new ClassPathResource("viewdata.jpg");
-
+    @RequestMapping(value = "/kmean_cluster", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
+    public void kmeans(HttpServletResponse response) throws IOException {
+        new DAO().kmean_cluster();
+        ClassPathResource imgFile = new ClassPathResource("scatter.PNG");
         response.setContentType(IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
