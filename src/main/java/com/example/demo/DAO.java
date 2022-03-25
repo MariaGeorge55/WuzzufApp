@@ -92,7 +92,6 @@ public class DAO {
        df=df.omitNullRows();
        ListIterator<Tuple> list= df.stream().filter(row -> !row.getString("YearsExp")
                 .equals("null Yrs of Exp")).collect(Collectors.toList()).listIterator ();
-
         return list;
 
     }
@@ -269,7 +268,6 @@ public class DAO {
     }
 
     public List<String> graphCompany(List<WuzzufData> wuzzufList) throws IOException {
-        //filter to get a map of passenger class and total number of passengers in each class
         Map<String, Long> result =
                 wuzzufList.stream ().collect (
                         Collectors.groupingBy (
@@ -359,12 +357,9 @@ public class DAO {
     }
 
     public double[][] newDataframe() throws IOException {
-        DataFrame  df2 = df.merge(IntVector.of("Factorized Title", encodeCategory(df, "Title")));
-        df2 = df2.merge(IntVector.of("Factorized Company", encodeCategory(df, "Company")));
-        // Write.csv(df2, get("I:/14-Java UML/Project/newWuzzuf.csv"));
-        df=df2;
-        DataFrame kmean = df2.select("Factorized Company", "Factorized Title");
-
+        df= df.merge(IntVector.of("Factorized Title", encodeCategory(df, "Title")));
+        df = df.merge(IntVector.of("Factorized Company", encodeCategory(df, "Company")));
+        DataFrame kmean = df.select("Factorized Company", "Factorized Title");
         double[][] KMEAN= kmean.toArray();
         return KMEAN;
     }
@@ -381,7 +376,7 @@ public class DAO {
         }
         catch (InvocationTargetException | InterruptedException e)
         {e.printStackTrace();}
-        
+
     }
 
 
