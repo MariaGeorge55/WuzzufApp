@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -9,7 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class WuzzufApplication {
 
 	public static void main(String[] args) {
-		//SpringApplication.run(WuzzufApplication.class, args);
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(WuzzufApplication.class);
 		builder.headless(false);
 		ConfigurableApplicationContext context = builder.run(args);

@@ -2,14 +2,13 @@ package com.example.demo;
 
 public class WuzzufData {
 
-     static int id=0;
+    static int id=0;
     private String Title;
     private String Company;
     private String Location;
     private String Type;
     private String Level;
     private String Country;
-
     private String YearsExp;
     private String Skills;
 

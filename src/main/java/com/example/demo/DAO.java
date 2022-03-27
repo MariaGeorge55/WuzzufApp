@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import org.apache.commons.csv.CSVFormat;
-
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 import smile.clustering.KMeans;
@@ -13,15 +12,12 @@ import smile.data.vector.IntVector;
 import smile.io.Read;
 import smile.plot.swing.ScatterPlot;
 import tech.tablesaw.api.Table;
-
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 import java.util.ArrayList;
 
 public class DAO {
@@ -378,8 +374,6 @@ public class DAO {
         {e.printStackTrace();}
 
     }
-
-
 
 
 }
