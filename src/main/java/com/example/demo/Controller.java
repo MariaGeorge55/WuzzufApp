@@ -52,6 +52,7 @@ public class Controller {
 
     @RequestMapping(value = "/companyChart", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
     public void getCompanyOffersChart(HttpServletResponse response) throws IOException {
+        new DAO().mostDcompany();
         ClassPathResource imgFile = new ClassPathResource("companychart.jpg");
         response.setContentType(IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
@@ -59,6 +60,7 @@ public class Controller {
 
     @RequestMapping(value = "/locationChart", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
     public void getLocationChart(HttpServletResponse response) throws IOException {
+        new DAO().areas();
         ClassPathResource imgFile = new ClassPathResource("locationchart.jpg");
         response.setContentType(IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
@@ -66,7 +68,7 @@ public class Controller {
 
     @RequestMapping(value = "/jobChart", method = RequestMethod.GET, produces = IMAGE_JPEG_VALUE)
     public void getjobChart(HttpServletResponse response) throws IOException {
-
+        new DAO().jobsTitle();
         ClassPathResource imgFile = new ClassPathResource("jobchart.jpg");
         response.setContentType(IMAGE_JPEG_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());

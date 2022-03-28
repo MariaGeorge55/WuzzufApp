@@ -60,12 +60,14 @@ public class DAO {
     }
 
     public String viewData() throws IOException {
-
         assert df != null;
         System.out.println(df.get(0, 1));
-        String html=String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">%s</h1>", "Sample From The Data") +
-                "<table style=\"width:100%;text-align: center\">" +
-                "<tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th>Skills</th></tr>";
+        String html=String.format("<head>\n" +
+                "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                "</head>"+"<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">%s</h1>", "Sample From The Data") +
+                "<table class=\"table table-striped  table-hover \" style=\"width:100%;text-align: center\">" +
+                "<thead><tr ><th style=\"text-align:center;\">Title</th><th style=\"text-align:center;\">Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th style=\"text-align:center;\">Skills</th></tr></thead><tbody>";
         List<WuzzufData>  lisTAlldata =getWuzzufList();
         for (int r=0;r<20;r++){
             html += "<tr>\n" ;
@@ -79,7 +81,7 @@ public class DAO {
                 html += "<td>"+ lisTAlldata.get(r).getSkills()+"</td>\n" ;
             html += "</tr>\n" ;
         }
-        html += "</table>";
+        html += "</tbody></table>";
         return html;
     }
 
@@ -98,22 +100,20 @@ public class DAO {
                 "          background-color: #2196F3; /* Green background */\n" +
                 "          border: 1px solid background; /* Green border */\n" +
                 "          color: white; /* White text */\n" +
-                "          padding: 12px 30px; /* Some padding */\n" +
+                "          padding: 15px 30px; /* Some padding */\n" +
                 "          cursor: pointer; /* Pointer/hand icon */\n" +
                 "          width: 75%; /* Set a width if needed */\n" +
                 "          display: block; /* Make the buttons appear below each other */\n" +
                 "          margin: auto;\n" +
-                "          margin-bottom: 5px;\n" +
+                "          margin-bottom: 8px;\n" +
                 "          align-self: auto ;\n" +
-                "          border-radius: 12px;\n" +
-                "          font-size: 16px;\n" +
-                "          font-family:cursive  ;\n" +
+                "          border-radius: 5px;\n" +
+                "          font-size: 18px;\n" +
+                "          font-family:verdana  ;\n" +
                 "        }\n" +
-                "\n" +
                 "        .btn-group button:not(:last-child) {\n" +
                 "          border-bottom: none; /* Prevent double borders */\n" +
                 "        }\n" +
-                "\n" +
                 "        /* Add a background color on hover */\n" +
                 "        .btn-group button:hover {\n" +
                 "          background-color: #0b7dda;\n" +
@@ -123,7 +123,6 @@ public class DAO {
                 "            width: 60%;\n" +
                 "            border: 0px solid #73AD21;\n" +
                 "            padding: 10px;\n" +
-                "\n" +
                 "         }\n" +
                 "        #GFG{\n" +
                 "            text-decoration: none;\n" +
@@ -131,13 +130,16 @@ public class DAO {
                 "        h1 {\n" +
                 "            color: whitesmoke;\n" +
                 "            background: black;\n" +
+                "            opacity: 0.7;\n     "  +
                 "            font-family: verdana;\n" +
                 "            font-size: 200%;\n" +
                 "            padding: 12px 30px;\n" +
                 "            margin-top: 0px;\n" +
+                "            text-align: center;"+
                 "          }\n" +
-                "        </style><div class=\"btn-group center\">\n" +
-                "\n" +
+                "        </style>" +
+                "<body><div  ><h1  > Wuzzuf Analysis </h1></div>" +
+                "<div class=\"btn-group center\">" +
                 "    <a id = \"GFG\" href=\"viewData\"><button> Read CSV and Display Some From It </button></a>\n" +
                 "    <a id = \"GFG\" href=\"Summary\"><button> Display Structure and Summary for the Data</button></a>\n" +
 
@@ -152,27 +154,33 @@ public class DAO {
 
                 "    <a id = \"GFG\" href=\"viewSkills\"><button>  Most Important skills </button></a>\n" +
                 "    <a id = \"GFG\" href=\"min_year_exp\"><button>Factorized Years Experience</button></a>\n" +
-                "    <a id = \"GFG\" href=\"kmean_cluster\"><button> k means</button></a>\n" +
-                "</div>";
+                "    <a id = \"GFG\" href=\"kmean_cluster\"><button> K-Means</button></a>\n" +
+                "</div></body>";
         return body;
     }
 
     public String Summary() throws IOException {
         // Using TableSaw
         Table Data1 = Table.read().csv(path);
-        String html=String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">%s</h1>", "Summary For The Data") +
-                "<table style=\"width:100%;text-align: center\">" +
-                "<tr><th>Summary</th><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th>Skills</th></tr>";
+        String html=String.format("<head>\n" +
+                "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+                "  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                "  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>\n" +
+                "  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                "</head><body>" +
+                "<h1 style=\"text-align:center;font-family:verdana;\">%s</h1>", "Summary For The Data") +
+                "<div class=\"table-responsive\" style=\"padding:20px\"  ><table  class=\"table table-condensed  table-hover \"  style=\"width:100%;text-align: center\">" +
+                "<tr class=\"info\"><th>Summary</th><th style=\"text-align:center;\">Title</th><th style=\"text-align:center;\">Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th style=\"text-align:center;\">Skills</th></tr>";
 
         int counts = Data1.summary().columnCount();
         for (int col = 0; col < 4; col++) {
-            html += "<tr>\n" ;
+            html += "<tr >\n" ;
             for (int ind = 0; ind < counts; ind++) {
                 html += "<td>"+Data1.summary().column(ind).get(col)+"</td>\n";
             }
             html += "</tr>\n" ;
         }
-        html += "</table>\n" ;
+        html += "</table></div></body>\n" ;
         return html;
     }
 
@@ -205,20 +213,27 @@ public class DAO {
     }
 
     public String view_importantSkills(){
-
         Map<String,Integer> skilll= importantSkills(df);
         var ref = new Object() {
-            String html = "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Important skills</h1>";
+            String html ="<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                        "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                        "<h1 style=\"padding-top:0px; text-align:center;font-family:verdana;background-color:lightblue;\">Most Important skills</h1>"+
+                        "<div style=\"padding-left:450px; padding-right:450px;  \" > <table class=\"table  table-hover \">";
         };
-        skilll.forEach((k,v)->   ref.html +="<h3 style=\"text-align:center;padding-left: 50px;\"> "+ k.toUpperCase()+"  \t\t\t   \t =  \t  "+v+"</h3>");
+        skilll.forEach((k,v)->   ref.html +="<tr><td> "+ k.toUpperCase()+" </td> <td> "+v+"</td><tr>");
+        ref.html += "</table></div>" ;
          return ref.html;
     }
 
     public  String min_year_exp(){
        df= df.merge (IntVector.of ("Factorized Years", encodeCategory (df, "YearsExp")));
-            String html=String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">%s</h1>", "Factorized DataFrame") +
-                    "<table style=\"width:100%;text-align: center\">" +
-                    "<tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th>Skills</th><th>Factorized Years</th></tr>";
+            String html=String.format("<head>\n" +
+                    "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                    "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                    "</head>" +
+                    "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">%s</h1>", "Factorized DataFrame") +
+                    "<div class=\"table-responsive\"><table class=\"table table-striped  table-hover \" style=\"width:100%;text-align: center\">" +
+                    "<thead><tr ><th style=\"text-align:center;\">Title</th><th style=\"text-align:center;\">Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th style=\"text-align:center;\">Skills</th><th>Factorized Years</th></tr></thead><tbody>";
             for (int row = 0; row < 20; row++) {
                 html += "<tr>\n" ;
                 if(! df.get(row, 5).equals( "null Yrs of Exp")){
@@ -228,7 +243,7 @@ public class DAO {
                 }
                 html += "</tr>\n" ;
             }
-            html += "</table>";
+            html += "</tbody></table></div>";
             return html;
     }
 
@@ -243,23 +258,29 @@ public class DAO {
         List<WuzzufData>  lisTAlldata =getWuzzufList();
         List<String> companies=  graphCompany(lisTAlldata);
         var ref = new Object() {
-            String html = "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Demanding Companies</h1>";
+            String html ="<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                    "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                    "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Demanding Companies</h1>" +
+                    "<div style=\"padding-left:450px; padding-right:450px; padding-top:30px;\" > <table class=\"table table-condensed  table-hover \">";
+
         };
-        companies.forEach((v)->   ref.html +="<h3 style=\"text-align:center;padding-left: 50px;\"> "+ v.toUpperCase()+"</h3>");
+        companies.forEach((v)->   ref.html +="<tr  ><td style=\"text-align:center; font-size:26 \"> "+ v+"</td></tr>");
+        ref.html += "</table></div>" ;
         return ref.html;
-
-      //  List<String> mostDemandJobs=graphJobTitle(lisTAlldata);
-
     }
 
     public String  jobsTitle() throws IOException {
 
         List<WuzzufData>  lisTAlldata =getWuzzufList();
         List<String> mostDemandJobs=graphJobTitle(lisTAlldata);
-          var ref = new Object() {
-            String html = "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Popular Job Title</h1>";
+        var ref = new Object() {
+            String html ="<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                    "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                    "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Popular Job Title</h1>" +
+                    "<div style=\"padding-left:450px; padding-right:450px; padding-top:10px;\" > <table class=\"table table-condensed  table-hover \">";
         };
-        mostDemandJobs.forEach((v)->   ref.html +="<h3 style=\"text-align:center;padding-left: 50px;\"> "+ v.toUpperCase()+"</h3>");
+        mostDemandJobs.forEach((v)->   ref.html +="<tr  ><td style=\" text-align: center; font-size:26 \"> "+ v+"</td></tr>");
+        ref.html += "</table></div>" ;
         return ref.html;
     }
 
@@ -319,9 +340,14 @@ public class DAO {
         List<WuzzufData>  lisTAlldata =getWuzzufList();
         List<String> mostDemandJobs=garphAreas(lisTAlldata);
         var ref = new Object() {
-            String html = "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Popular Areas</h1>";
+            String html ="<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
+                    "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js\"></script>\n" +
+                    "<h1 style=\"text-align:center;font-family:verdana;background-color:lightblue;\">Most Popular Areas</h1>" +
+                    "<div style=\"padding-left:450px; padding-right:450px; padding-top:10px;\" > <table class=\"table table-condensed  table-hover \">";
+
         };
-        mostDemandJobs.forEach((v)->   ref.html +="<h3 style=\"text-align:center;padding-left: 50px;\"> "+ v.toUpperCase()+"</h3>");
+        mostDemandJobs.forEach((v)->   ref.html +="<tr  ><td style=\"text-align:center; font-size:26 \"> "+ v+"</td></tr>");
+        ref.html += "</table></div>" ;
         return ref.html;
     }
 
@@ -352,7 +378,7 @@ public class DAO {
         return a_Names;
     }
 
-    public double[][] newDataframe() throws IOException {
+    public double[][] newDataframe()  {
         df= df.merge(IntVector.of("Factorized Title", encodeCategory(df, "Title")));
         df = df.merge(IntVector.of("Factorized Company", encodeCategory(df, "Company")));
         DataFrame kmean = df.select("Factorized Company", "Factorized Title");
